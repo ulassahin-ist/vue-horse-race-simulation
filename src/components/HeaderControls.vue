@@ -1,7 +1,7 @@
 <template>
   <div class="container">
     <div class="title">Horse Racing</div>
-    <button>Generate Horses</button>
+    <button @click="generateHorses">Generate Horses</button>
     <button>Generate Program</button>
     <button>Start</button>
   </div>
@@ -24,3 +24,11 @@ button {
   padding: 5px 3px;
 }
 </style>
+
+<script setup>
+import { useStore } from "vuex";
+const store = useStore();
+function generateHorses() {
+  store.dispatch("generateHorses");
+}
+</script>

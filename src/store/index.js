@@ -25,11 +25,15 @@ export default createStore({
     generateHorses({ commit }) {
       // prettier-ignore
       const horseNames = ["Thunderbolt", "Midnight Majesty", "Silver Arrow", "Crimson Comet", "Golden Mirage","Whisperwind", "Ironstride", "Phantom Blaze", "Luna’s Shadow", "Wildfire","Star Dancer", "Misty Valley", "Storm Runner", "Jetstream", "Aurora Flame","Velvet Thunder", "Dust Devil", "Nightshade", "Echo Spirit", "Royal Tempest","Shadowfax", "Morning Glory", "Cinderheart", "High Voltage", "Eclipse Dancer","Frozen Fire", "Rapid River", "Diamond Soul", "Majestic Dream", "Solar Wind","Moonfire", "Lightning Step", "Ocean Whisper", "Valiant Star", "Frostbite","Noble Heart", "Wild Majesty", "Desert Flame", "Silver Storm", "Tempest Wind"]
+
+      // prettier-ignore
+      const horseColors = ["reddish","green","blue","yellow","purple","orange","teal","dark-orange","emerald-green","sky-blue","red","dark-purple","deep-blue","turquoise","bright-orange","crimson","gray","silver","dark-navy","pink",];
       const shuffledNames = [...horseNames].sort(() => 0.5 - Math.random());
+      const shuffledColors = [...horseColors].sort(() => 0.5 - Math.random());
       const horses = Array.from({ length: 20 }, (_, i) => ({
         id: i + 1,
         name: shuffledNames[i],
-        color: `hsl(${i * 18}, 70%, 50%)`,
+        color: shuffledColors[i],
         condition: Math.floor(Math.random() * 100) + 1,
       }));
       commit("setHorses", horses);

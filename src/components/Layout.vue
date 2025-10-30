@@ -6,7 +6,10 @@
     </header>
     <!-- Page -->
     <div class="main-page">
-      <aside class="horse-list sidebar">
+      <aside
+        class="horse-list sidebar"
+        :class="{ invisible: !(store.state.horses.length > 0) }"
+      >
         <HorseList />
       </aside>
       <section class="race-track">
@@ -30,9 +33,15 @@ import HorseList from "./HorseList.vue";
 import RaceTrack from "./RaceTrack.vue";
 import RacePrograms from "./RacePrograms.vue";
 import RaceResults from "./RaceResults.vue";
+import { useStore } from "vuex";
+const store = useStore();
 </script>
 
 <style>
+.invisible {
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
 .layout {
   height: 100vh;
   width: 100vw;
@@ -79,6 +88,8 @@ th {
   padding: 5px 3px;
 }
 th {
+  font-weight: 600;
+  letter-spacing: 1px;
   background: var(--table-head);
 }
 

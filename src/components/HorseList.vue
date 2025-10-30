@@ -4,90 +4,18 @@
     <table>
       <thead>
         <tr>
-          <th>Position</th>
           <th>Name</th>
+          <th>Condition</th>
+          <th>Color</th>
         </tr>
       </thead>
       <tbody>
-        <tr>
-          <td>0</td>
-          <td>Mock</td>
-        </tr>
-        <tr>
-          <td>0</td>
-          <td>Mock</td>
-        </tr>
-        <tr>
-          <td>0</td>
-          <td>Mock</td>
-        </tr>
-        <tr>
-          <td>0</td>
-          <td>Mock</td>
-        </tr>
-        <tr>
-          <td>0</td>
-          <td>Mock</td>
-        </tr>
-        <tr>
-          <td>0</td>
-          <td>Mock</td>
-        </tr>
-        <tr>
-          <td>0</td>
-          <td>Mock</td>
-        </tr>
-        <tr>
-          <td>0</td>
-          <td>Mock</td>
-        </tr>
-        <tr>
-          <td>0</td>
-          <td>Mock</td>
-        </tr>
-        <tr>
-          <td>0</td>
-          <td>Mock</td>
-        </tr>
-        <tr>
-          <td>0</td>
-          <td>Mock</td>
-        </tr>
-        <tr>
-          <td>0</td>
-          <td>Mock</td>
-        </tr>
-        <tr>
-          <td>0</td>
-          <td>Mock</td>
-        </tr>
-        <tr>
-          <td>0</td>
-          <td>Mock</td>
-        </tr>
-        <tr>
-          <td>0</td>
-          <td>Mock</td>
-        </tr>
-        <tr>
-          <td>0</td>
-          <td>Mock</td>
-        </tr>
-        <tr>
-          <td>0</td>
-          <td>Mock</td>
-        </tr>
-        <tr>
-          <td>0</td>
-          <td>Mock</td>
-        </tr>
-        <tr>
-          <td>0</td>
-          <td>Mock</td>
-        </tr>
-        <tr>
-          <td>0</td>
-          <td>Mock</td>
+        <tr v-for="(horse, index) in horses" :key="index">
+          <td>{{ horse.name }}</td>
+          <td>{{ horse.condition }}</td>
+          <td :style="{ background: `var(--${horse.color})` }">
+            {{ horse.color }}
+          </td>
         </tr>
       </tbody>
     </table>
@@ -102,3 +30,12 @@
   flex-direction: column;
 }
 </style>
+
+<script setup>
+import { computed } from "vue";
+import { useStore } from "vuex";
+
+const store = useStore();
+
+const horses = computed(() => store.state.horses);
+</script>
