@@ -328,11 +328,12 @@ defineExpose({
   border-radius: 8px;
   overflow-x: hidden;
   overflow-y: visible;
+  -webkit-mask-image: linear-gradient(black, black);
+  clip-path: inset(0 round 8px);
 }
 .track-inner {
   position: relative;
-  overflow-y: visible;
-  overflow-x: clip;
+  overflow: visible;
 }
 
 .lane {
