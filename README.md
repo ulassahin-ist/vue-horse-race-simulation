@@ -6,7 +6,7 @@ This project demonstrates my approach to **state management**, **component commu
 ---
 
 ## 🚀 Features
-
+- Conditions, though effective do not predetermine the race outcomes, factors of **luck** are implemented.
 - Generates **20 unique horses** with randomized names, colors, and conditions.  
 - Automatically creates a **6-race program**, each with 10 randomly selected horses.  
 - Displays a **live race simulation** for each round.  
