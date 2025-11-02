@@ -13,14 +13,16 @@
 
     <div class="track">
       <div class="finish-line"></div>
+      <div
+        :class="{ displaynone: !(store.state.races.length > 0) }"
+        class="track-crop"
+      ></div>
       <div v-for="(horse, index) in raceHorses" :key="horse.id" class="lane">
         <span class="lane-tag">{{ index + 1 }}</span>
         <div
           class="horse"
           :style="{
-            left: `calc(min(${
-              (horse.position / currentRace.distance) * 100
-            }%, 100% - var(--horse-width)))`,
+            left: (horse.position / currentRace.distance) * 100 + '%',
             background: `var(--${horse.color})`,
           }"
         >
@@ -309,6 +311,10 @@ defineExpose({
 </script>
 
 <style scoped>
+.displaynone {
+  display: none;
+}
+
 .container {
   position: relative;
   width: 100%;
@@ -344,7 +350,7 @@ defineExpose({
 .horse {
   position: absolute;
   top: 10px;
-  width: var(--horse-width);
+  width: 90px;
   height: 15px;
   font-size: 12px;
   display: flex;
@@ -383,6 +389,23 @@ defineExpose({
   width: 3px;
   height: 95%;
   background: rgb(172, 0, 0);
+}
+.track-crop {
+  position: absolute;
+  top: -40px;
+  right: -90px;
+  width: 90px;
+  height: 100%;
+  background: linear-gradient(
+    to bottom,
+
+    #424252 0%,
+    #424252 33%,
+    #1a1b1d 33%,
+    #1a1b1d 100%
+  );
+  pointer-events: none;
+  z-index: 20;
 }
 /* Message overlay  */
 .overlay {

@@ -163,6 +163,7 @@ header .title {
   max-height: calc(100vh - var(--scroll-offset));
   padding: 0;
   transition: all 0.5s linear;
+  z-index: 50;
 }
 .closed {
   max-height: var(--title-offset);
