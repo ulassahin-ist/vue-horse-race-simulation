@@ -35,7 +35,12 @@ const props = defineProps({
 svg {
   display: inline-block;
   vertical-align: middle;
-  color: currentColor;
+  fill: currentColor;
+}
+:deep(svg path),
+:deep(svg circle),
+:deep(svg rect),
+:deep(svg polygon) {
   fill: currentColor !important;
 }
 </style>

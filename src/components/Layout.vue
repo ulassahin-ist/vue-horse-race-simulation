@@ -204,7 +204,7 @@ th {
   text-transform: uppercase;
 }
 td {
-  color: black;
+  color: rgb(27, 27, 31);
 }
 table {
   border-collapse: collapse;

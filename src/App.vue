@@ -65,6 +65,7 @@ button {
   justify-content: center;
   padding: 0;
   background: #ffffff;
+  color: rgb(27, 27, 31);
   border: 3px solid #d0d0d0;
   cursor: pointer;
   box-shadow: 4px 4px 0 #c7c7c7;

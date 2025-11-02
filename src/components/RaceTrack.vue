@@ -12,9 +12,8 @@
     </div>
 
     <div class="track">
+      <div class="finish-line"></div>
       <div class="track-inner">
-        <div class="finish-line"></div>
-
         <div v-for="(horse, index) in raceHorses" :key="horse.id" class="lane">
           <span class="lane-tag">{{ index + 1 }}</span>
           <div
@@ -327,12 +326,13 @@ defineExpose({
   height: 464px;
   background: #333;
   border-radius: 8px;
-  overflow-x: clip;
+  overflow-x: hidden;
   overflow-y: visible;
 }
 .track-inner {
   position: relative;
-  overflow: visible;
+  overflow-y: visible;
+  overflow-x: clip;
 }
 
 .lane {
