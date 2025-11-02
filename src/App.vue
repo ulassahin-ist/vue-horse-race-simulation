@@ -8,6 +8,7 @@ import Layout from "./components/Layout.vue";
 
 <style>
 :root {
+  --horse-width: 90px;
   --scroll-offset: 96px;
   --title-offset: 57px;
   --header: #1c2331;

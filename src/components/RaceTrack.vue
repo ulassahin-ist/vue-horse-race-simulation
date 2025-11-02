@@ -13,25 +13,25 @@
 
     <div class="track">
       <div class="finish-line"></div>
-      <div class="track-inner">
-        <div v-for="(horse, index) in raceHorses" :key="horse.id" class="lane">
-          <span class="lane-tag">{{ index + 1 }}</span>
-          <div
-            class="horse"
-            :style="{
-              left: (horse.position / currentRace.distance) * 100 + '%',
-              background: `var(--${horse.color})`,
-            }"
-          >
-            <img
-              :src="horseImages[frameIndexes[index] % horseImages.length]"
-              alt="horse"
-              class="horse-img"
-            />
-            <span class="horse-name">
-              {{ horse.name }}
-            </span>
-          </div>
+      <div v-for="(horse, index) in raceHorses" :key="horse.id" class="lane">
+        <span class="lane-tag">{{ index + 1 }}</span>
+        <div
+          class="horse"
+          :style="{
+            left: `calc(min(${
+              (horse.position / currentRace.distance) * 100
+            }%, 100% - var(--horse-width)))`,
+            background: `var(--${horse.color})`,
+          }"
+        >
+          <img
+            :src="horseImages[frameIndexes[index] % horseImages.length]"
+            alt="horse"
+            class="horse-img"
+          />
+          <span class="horse-name">
+            {{ horse.name }}
+          </span>
         </div>
       </div>
     </div>
@@ -326,13 +326,6 @@ defineExpose({
   height: 464px;
   background: #333;
   border-radius: 8px;
-  overflow-x: hidden;
-  overflow-y: visible;
-  -webkit-mask-image: linear-gradient(black, black);
-  clip-path: inset(0 round 8px);
-}
-.track-inner {
-  position: relative;
   overflow: visible;
 }
 
@@ -351,7 +344,7 @@ defineExpose({
 .horse {
   position: absolute;
   top: 10px;
-  width: 90px;
+  width: var(--horse-width);
   height: 15px;
   font-size: 12px;
   display: flex;
