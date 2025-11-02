@@ -1,11 +1,11 @@
 <template>
   <!-- Hidden audio elements -->
   <div style="display: none">
-    <audio ref="crowd" src="/audios/crowd.mp3" loop></audio>
-    <audio ref="gallop" src="/audios/gallop.mp3" loop></audio>
-    <audio ref="startRace" src="/audios/start-race.mp3"></audio>
-    <audio ref="applaud" src="/audios/applaud.mp3"></audio>
-    <audio ref="click" src="/audios/click-button.mp3"></audio>
+    <audio ref="crowd" src="./audios/crowd.mp3" loop></audio>
+    <audio ref="gallop" src="./audios/gallop.mp3" loop></audio>
+    <audio ref="startRace" src="./audios/start-race.mp3"></audio>
+    <audio ref="applaud" src="./audios/applaud.mp3"></audio>
+    <audio ref="click" src="./audios/click-button.mp3"></audio>
   </div>
 </template>
 
