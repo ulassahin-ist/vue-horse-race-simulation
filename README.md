@@ -13,7 +13,7 @@ An interactive horse racing simulator built with **Vue 3**, **Vite**, and **Vuex
 
 ## ✅ Features
 
-- Generate **40 unique horses** (name, condition, color)
+- Generate **20 unique horses** (name, condition, color)
 - Randomized race programs with different distances
 - Real-time horse animation using `requestAnimationFrame`
 - Pause / resume / stop races
@@ -68,7 +68,7 @@ src/
 
 ### ✅ 1) Generate horses
 
-- 40 random horses
+- 20 random horses
 - Each has **color**, **name**, **condition**, and sprite animation
 
 ### ✅ 2) Create race program
@@ -81,6 +81,7 @@ src/
 
 - `requestAnimationFrame` updates horse movement
 - Speed is a mix of condition & randomness
+- Chances of speed bursts
 - When a horse finishes → pushed to Vuex results
 
 ### ✅ 4) After all races
