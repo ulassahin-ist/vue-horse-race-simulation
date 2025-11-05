@@ -1,4 +1,5 @@
 <script setup>
+/* Imports for all SVG icons */
 import HorseIcon from "../assets/icons/horse.svg?component";
 import StartIcon from "../assets/icons/start.svg?component";
 import PauseIcon from "../assets/icons/pause.svg?component";
@@ -7,6 +8,7 @@ import ProgramIcon from "../assets/icons/program.svg?component";
 import ResetIcon from "../assets/icons/reset.svg?component";
 import TrophyIcon from "../assets/icons/trophy.svg?component";
 
+/* Icon lookup by name */
 const icons = {
   horse: HorseIcon,
   start: StartIcon,
@@ -17,6 +19,7 @@ const icons = {
   trophy: TrophyIcon,
 };
 
+/* Props for flexible icon usage */
 const props = defineProps({
   name: { type: String, required: true },
   size: { type: [Number, String], default: 28 },
@@ -25,6 +28,7 @@ const props = defineProps({
 </script>
 
 <template>
+  <!-- Render selected icon -->
   <component
     :is="icons[name]"
     v-bind="{ width: size, height: size, fill: color }"
@@ -37,6 +41,8 @@ svg {
   vertical-align: middle;
   fill: currentColor;
 }
+
+/* Forces all paths to adopt currentColor */
 :deep(svg path),
 :deep(svg circle),
 :deep(svg rect),

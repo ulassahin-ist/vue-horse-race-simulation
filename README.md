@@ -1,79 +1,215 @@
-# 🏇 Horse Racing Case
+# 🏇 Horse Racing Simulator (Vue 3 + Vite)
 
-A simulated horse racing application built for the **Frontend Developer Case**.  
-This project demonstrates my approach to **state management**, **component communication**, and **animation timing** using Vue 3 and Vuex.
+An interactive horse racing simulator built with **Vue 3**, **Vite**, and **Vuex**, featuring animated races, randomized programs, real-time results, and now full **Playwright E2E testing**.
 
----
-
-## 🚀 Features
-- Conditions, though effective do not predetermine the race outcomes, factors of **luck** are implemented.
-- Generates **20 unique horses** with randomized names, colors, and conditions.  
-- Automatically creates a **6-race program**, each with 10 randomly selected horses.  
-- Displays a **live race simulation** for each round.  
-- Shows **results dynamically**, updating after each horse finishes.  
-- Includes **sound effects**, countdowns, and start/pause controls.
-- Results bar outo-scrolls to view results easier.
-- Colors are on the horse list and the horses so tracking comes with no work.  
-- Designed with a **retro-inspired interface** and smooth transitions.
+✅ Generate horses  
+✅ Build race programs  
+✅ Watch races with animation & sounds  
+✅ Pause / resume / restart  
+✅ Final winners modal  
+✅ Fully automated tests for reliability
 
 ---
 
-## 🧠 Technical Overview
+## ✅ Features
 
-- **Vue 3 (Composition API)**
-- **Vuex** for centralized state management
-- **Component-based architecture**
-- **Reusable store actions & mutations**
-- **Ref-based DOM control** for smooth scrolling and UI updates
+- Generate **40 unique horses** (name, condition, color)
+- Randomized race programs with different distances
+- Real-time horse animation using `requestAnimationFrame`
+- Pause / resume / stop races
+- Final results summary modal
+- Vuex-powered global game state
+- Responsive UI and pixel-style horse sprites
+- Sound effects (crowd, gallop, cheering, clicks)
+- Auto scrolls results as they come
+- Auto-pause when user switches tabs or browser is hidden
+- **E2E Tests using Playwright** (full race cycles, modal, pause/resume)
 
 ---
 
-## 🖥️ Running the Project
+## 🧩 Tech Stack
+
+| Area             | Technology Used                                  |
+| ---------------- | ------------------------------------------------ |
+| Framework        | Vue 3 (Composition API)                          |
+| Build Tool       | Vite                                             |
+| State Management | Vuex                                             |
+| Animation Engine | `requestAnimationFrame` + interval-based sprites |
+| Testing          | Playwright (E2E) + Vitest (unit)                 |
+| Styling          | Custom CSS + CSS variables                       |
+
+---
+
+## 📁 Project Structure (simplified)
+
+```
+src/
+├─ components/
+│  ├─ Layout.vue
+│  ├─ RaceTrack.vue
+│  ├─ RacePrograms.vue
+│  ├─ RaceResults.vue
+│  ├─ HeaderControls.vue
+│  └─ Audio.vue
+│
+├─ store/
+│  └─ index.js
+│
+├─ assets/
+│  └─ sprites/, icons/, audio/
+│
+├─ App.vue
+└─ main.js
+```
+
+---
+
+## 🚀 How the Racing Works
+
+### ✅ 1) Generate horses
+
+- 40 random horses
+- Each has **color**, **name**, **condition**, and sprite animation
+
+### ✅ 2) Create race program
+
+- Multiple races
+- Each selects 10 random horses
+- Distance varies (1200–2200m)
+
+### ✅ 3) Run race
+
+- `requestAnimationFrame` updates horse movement
+- Speed is a mix of condition & randomness
+- When a horse finishes → pushed to Vuex results
+
+### ✅ 4) After all races
+
+- Final **summary modal** appears
+- Shows winners of each lap
+
+---
+
+## 🧪 End-to-End Testing (Playwright)
+
+This app includes full E2E coverage:
+
+- ✅ Full race simulation works
+- ✅ Pause/resume works
+- ✅ Cannot start race before program is generated
+- ✅ Final summary modal shows 6 winners
+
+### ✅ Test Mode (Important!)
+
+`main.js` adds:
+
+```js
+if (window.__E2E__) {
+  console.log("Running in E2E mode");
+}
+window.__store__ = store;
+```
+
+This exposes the store so Playwright can safely inspect it.
+
+### ✅ Running E2E tests
 
 ```bash
-# Clone the repository
-git clone https://github.com/ulassahin-ist/ulas-sahin-horse-race
-cd ulas-sahin-horse-race
+npm run test:e2e
+```
 
-# Install dependencies
+Playwright will:
+
+- Generate horses
+- Generate program
+- Start all races
+- Verify modal and winners
+- Confirm pause/resume
+- Confirm user cannot start race early
+
+---
+
+## 🧪 Unit Tests (Vitest)
+
+`vite.config.js` test section:
+
+```js
+test: {
+  include: ["tests/unit/**/*.spec.js"],
+  environment: "jsdom",
+  globals: true,
+  threads: false,
+  pool: "forks",
+}
+```
+
+Run:
+
+```bash
+npm run test
+```
+
+---
+
+## 🎮 Running Locally
+
+```bash
 npm install
-
-# Run the development server
 npm run dev
+```
 
-Then open the app in your browser at
-👉 http://localhost:5173
+Then open:  
+`http://localhost:5173`
 
+---
 
-📂 Project Structure
-src/
- ├─ components/
- │   ├─ HeaderControls.vue
- │   ├─ HorseList.vue
- │   ├─ RaceTrack.vue
- │   ├─ RacePrograms.vue
- │   ├─ RaceResults.vue
- │   └─ Audio.vue
- ├─ store/
- │   └─ index.js
- ├─ assets/
- └─ App.vue
+## ❓ Why Vuex?
 
+- Race logic, countdowns, horses, and UI overlays update live
+- No prop drilling
+- Components react automatically to state change
 
-💡 Notes
+---
 
-The project was developed within a limited timeframe, focusing on clarity, functionality, and code organization.
-Given more time, I would:
+## 🎧 Why Clone Audio Nodes?
 
-Add unit and integration tests.
+Multiple sounds must overlap:
 
-Improve accessibility and responsive layout.
+✅ applause + gallop + UI click  
+Normal `<audio>` cannot play multiple instances — cloned nodes solve it.
 
-Modularize the audio and race simulation logic further.
+---
 
-🙌 About This Case
+## 💤 Handling Lost Browser Focus
 
-It was truly a pleasure to be part of this process and to work on a case that combines logic, animation, and creativity.
-I hope you enjoy reviewing the project as much as I enjoyed building it.
+When tab is hidden or minimized:
 
-— Ulaş
+- Race auto-pauses
+- Sounds stop
+- Winner overlay hides
+
+Prevents race from finishing while the user can’t see it.
+
+---
+
+## ✅ Included Playwright Tests
+
+| Test File                              | What It Verifies                               |
+| -------------------------------------- | ---------------------------------------------- |
+| `race-flow.spec.js`                    | Full race cycle until final summary modal      |
+| `race-pause-resume.spec.js`            | Horses stop moving when paused, continue after |
+| `race-no-start-before-program.spec.js` | Start blocked until program generated          |
+| `race-summary-modal.spec.js`           | Final modal shows 6 winners                    |
+
+---
+
+## ✅ Status: Fully working ✅
+
+✔ Smooth animation  
+✔ Sounds  
+✔ Restartable race program  
+✔ Final modal  
+✔ **All tests passing**
+
+Enjoy the races 🏇🔥  
+Pull requests and improvements are welcome!

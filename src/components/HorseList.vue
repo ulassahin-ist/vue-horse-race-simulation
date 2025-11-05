@@ -1,6 +1,8 @@
 <template>
   <div class="container">
     <div class="title">HORSES</div>
+
+    <!-- Shows all horses loaded from store -->
     <table>
       <thead>
         <tr>
@@ -9,10 +11,14 @@
           <th>Color</th>
         </tr>
       </thead>
+
       <tbody>
+        <!-- Displays one row per horse -->
         <tr v-for="(horse, index) in horses" :key="index">
           <td>{{ horse.name }}</td>
           <td>{{ horse.condition }}</td>
+
+          <!-- Color preview box -->
           <td :style="{ background: `var(--${horse.color})` }">
             {{ horse.color }}
           </td>
@@ -23,20 +29,14 @@
 </template>
 
 <style scoped>
+/* Simple column layout */
 .container {
   flex: 1;
   display: flex;
   flex-direction: column;
 }
-.title {
-  background: linear-gradient(145deg, #d9dbdf, #a6a9ad);
-  color: #1b1b1f;
-  font-weight: 600;
-  letter-spacing: 0.5px;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-  padding: 10px 14px;
-}
 
+/* Basic table borders */
 table,
 td,
 th {
@@ -51,5 +51,6 @@ import { useStore } from "vuex";
 
 const store = useStore();
 
+/* Pull horses directly from store */
 const horses = computed(() => store.state.horses);
 </script>

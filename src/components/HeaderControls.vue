@@ -2,6 +2,7 @@
   <div class="container">
     <div class="title">Horse Racing</div>
 
+    <!-- Generate horses -->
     <button
       :disabled="store.state.gameInProgress || raceState.running"
       @click="generateHorses"
@@ -10,6 +11,7 @@
       <Icon name="horse" size="26" color="#222" />
     </button>
 
+    <!-- Generate races -->
     <button
       :disabled="
         store.state.gameInProgress ||
@@ -22,6 +24,7 @@
       <Icon name="program" size="26" color="#222" />
     </button>
 
+    <!-- Start / Pause / Resume -->
     <button
       :disabled="!store.state.races.length || !areHorsesSynced()"
       @click="handleRaceControl"
@@ -30,6 +33,7 @@
       <Icon :name="raceButtonIcon" size="26" color="#222" />
     </button>
 
+    <!-- Full reset -->
     <button
       :disabled="!store.state.horses.length && !store.state.races.length"
       @click="emit('resetAll')"
@@ -55,70 +59,73 @@ const emit = defineEmits([
 const store = useStore();
 const raceState = computed(() => store.state.raceState);
 
+/* Button icon respects current race state */
 const raceButtonIcon = computed(() => {
-  const { running, paused, winner } = raceState.value;
-
-  if (!store.state.gameInProgress) return "start";
-
-  if (!running && !paused && !winner) return "start";
-
+  const { running, paused } = raceState.value;
   if (running) return paused ? "resume" : "pause";
-
   return "start";
 });
+
+/* Main control logic for start / pause / resume */
 function handleRaceControl() {
   const { running } = raceState.value;
   const gameInProgress = store.state.gameInProgress;
-  const currentIndex = store.state.raceState.raceIndex;
+  const currentIndex = raceState.value.raceIndex;
   const totalRaces = store.state.races.length;
-  const resultsComplete =
+
+  const noActiveGame = !gameInProgress;
+  const lastRaceFinished =
     store.state.results.length === totalRaces && totalRaces > 0;
-  if (!gameInProgress && resultsComplete) {
+
+  // If everything finished, reset result history first
+  if (noActiveGame && lastRaceFinished) {
     store.commit("clearResults");
     store.commit("clearRuntime");
   }
-  if (running) {
-    emit("togglePause");
-    return;
-  }
-  if (!gameInProgress && currentIndex === 0 && store.state.results.length) {
-    emit("initRace");
-    return;
-  }
-  if (gameInProgress && !running) {
+
+  // Toggle pause if already running
+  if (running) return emit("togglePause");
+
+  const hasResults = store.state.results.length > 0;
+  const startingFirstRace = noActiveGame && currentIndex === 0 && hasResults;
+
+  // Start new race from beginning
+  if (startingFirstRace) return emit("initRace");
+
+  // Between races, countdown is active → skip it and move to next
+  const pausedBetweenRaces = gameInProgress && !running;
+  if (pausedBetweenRaces) {
     emit("cancelCountdown");
     store.commit("incrementRaceIndex");
-    setTimeout(() => emit("initRace"), 50);
-    return;
+    return setTimeout(() => emit("initRace"), 50);
   }
-  if (!gameInProgress) {
-    emit("initRace");
-  }
+
+  // Initial run
+  if (noActiveGame) emit("initRace");
 }
 
+/* Verifies that program horses match current horse list */
 function areHorsesSynced() {
   const horses = store.state.horses;
-  const raceHorses = store.state.races.flatMap((r) => r.horses);
+  const currentRace = store.state.races[raceState.value.raceIndex];
+  if (!horses.length || !currentRace) return false;
 
-  if (!horses.length || !raceHorses.length) return false;
-
-  function isSameHorse(h1, h2) {
-    return (
-      h1.id === h2.id &&
-      h1.name === h2.name &&
-      h1.color === h2.color &&
-      h1.condition === h2.condition
-    );
-  }
-
-  return raceHorses.every((raceHorse) =>
-    horses.some((mainHorse) => isSameHorse(mainHorse, raceHorse))
+  return currentRace.horses.every((raceHorse) =>
+    horses.some((h) => {
+      return (
+        h.id === raceHorse.id &&
+        h.name === raceHorse.name &&
+        h.condition === raceHorse.condition &&
+        h.color === raceHorse.color
+      );
+    })
   );
 }
 
 function generateHorses() {
   store.dispatch("generateHorses");
 }
+
 function generateRaces() {
   store.dispatch("generateRaces");
 }
@@ -134,6 +141,7 @@ function generateRaces() {
   gap: 10px;
   padding-right: 20px;
 }
+
 .title {
   margin-right: auto;
   font-weight: bolder;
