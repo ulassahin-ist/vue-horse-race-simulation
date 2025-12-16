@@ -4,7 +4,7 @@ import svgLoader from "vite-svg-loader";
 import * as path from "node:path";
 
 export default defineConfig({
-  base: "/ulas-sahin-horse-race/",
+  base: "/vue-horse-race-simulation/",
   plugins: [vue(), svgLoader()],
   resolve: {
     alias: {
