@@ -1,3 +1,6 @@
+[![Live Demo](https://img.shields.io/badge/demo-live-brightgreen)](https://ulassahin-ist.github.io/vue-horse-race-simulation/)
+[![GitHub](https://img.shields.io/badge/github-repository-blue)](https://github.com/ulassahin-ist/vue-horse-race-simulation)
+
 # 🏇 Horse Racing Simulator (Vue 3 + Vite)
 
 An interactive horse racing simulator built with **Vue 3**, **Vite**, and **Vuex**, featuring animated races, randomized programs, real-time results, and now full **Playwright E2E testing**.
